@@ -29,7 +29,7 @@ def init_db():
 def init_db_command():
     '''Clear the existing database and remake all tables'''
     init_db()
-    click.echo('Database flushed')
+    click.echo('Database initialised')
 
 def init_app(app):
     app.teardown_appcontext(close_db)
