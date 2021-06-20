@@ -1,5 +1,7 @@
 DROP TABLE IF EXISTS recipie;
 DROP TABLE IF EXISTS technique;
+DROP TABLE IF EXISTS ingredient;
+DROP TABLE IF EXISTS recipie_ingredient;
 DROP TABLE IF EXISTS recipie_technique;
 
 CREATE TABLE recipie(
@@ -19,17 +21,17 @@ CREATE TABLE technique(
     difficulty INTEGER,
     utensils TEXT,
     body TEXT,
-    theory TEXT,
+    theory TEXT
 );
 
 CREATE TABLE ingredient(
-    iid INTEGER PRIMARY KEY AUTOINCREMENT
-    name TEXT NOT NULL,
+    iid INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL
 );
 
 CREATE TABLE recipie_ingredient(
-    iid INTEGER PRIMARY KEY,
-    rid INTEGER PRIMARY KEY,
+    iid INTEGER,
+    rid INTEGER,
     quantity TEXT,
     FOREIGN KEY (rid) REFERENCES recipie(rid),
     FOREIGN KEY (iid) REFERENCES ingredient(iid)
@@ -39,6 +41,5 @@ CREATE TABLE recipie_technique(
     rid TEXT,
     tid TEXT,
     FOREIGN KEY (rid) REFERENCES recipie(rid),
-    FOREIGN KEY (tid) REFERENCES technique(tid),
+    FOREIGN KEY (tid) REFERENCES technique(tid)
 );
-commit;
