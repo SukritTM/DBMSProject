@@ -31,4 +31,7 @@ def create_app(test_config=None):
     def hello():
         return 'hello world'
     
+    from . import mainpages
+    app.register_blueprint(mainpages.bp)
+    
     return app

@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<div class="summary-block">
+	<p class="summary-text">{{ recipie['summary'] }}</p>
+</div>
+
+<div class="Recipe-info">  
+	<dl class="R-Info-List">
+		<dt><h3>Recipe Details</h3></dt>
+		<dd  class="difficulty">Difficulty Rating: {{ recipie['difficulty'] }}</dd>
+		<dd  class="cooktime">Cook time: {{ recipie['cooktime'] }} hours</dd>
+		<dd  class="serves-count">Serves: {{ recipie['serves']  }} people</dd>
+		<dd  class="veg/nonveg">{{ recipie['veg'] }}</dd>
+	</dl>
+</div>	
+
+<div class="Ingrdients-block">
+	<strong class="ingredients-title">Ingredients</strong>
+  <ul class="ingridients-list">
+    {% for ingredient in ingredients %}
+	    <li>{{ ingredient['name'] }}</li>
+    {% endfor %}
+  </ul>
+</div>
+<div class="Procedure-Block">
+	<p><strong>Procedure</strong><br>{{ recipie['body'] }}</p>
+</div>
+<div class="Techniques-block">
+	<strong class="Techniques-title">Techniques used</strong>
+  <ul class="ingridients-list">
+	<li>sauté</li>
+    <li>heat tablespoon</li>
+  </ul>
+</div>
+</body>
+</html>

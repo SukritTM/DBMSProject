@@ -38,8 +38,8 @@ CREATE TABLE recipie_ingredient(
 );
 
 CREATE TABLE recipie_technique(
-    rid TEXT,
-    tid TEXT,
+    rid INTEGER,
+    tid INTEGER,
     FOREIGN KEY (rid) REFERENCES recipie(rid),
     FOREIGN KEY (tid) REFERENCES technique(tid)
 );
