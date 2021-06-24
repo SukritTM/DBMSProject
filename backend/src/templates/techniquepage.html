@@ -22,14 +22,16 @@
 	</dl>
 </div>	
 
-<div class="Ingredients-block">
-	<strong class="ingredients-title">Ingredients used if any</strong>
-  <ul class="ingridients-list">
-	{% for ingredient in ingredients %}
+{% if ingredients %}
+	<div class="Ingredients-block">
+		<strong class="ingredients-title">Ingredients used if any</strong>
+  	<ul class="ingridients-list">
+		{% for ingredient in ingredients %}
 	    <li>{{ ingredient['quantity'] }} {{ ingredient['name'] }}</li>
-    {% endfor %}
-  </ul>
-</div>
+    	{% endfor %}
+  	</ul>
+	</div>
+{% endif %}
 <div class="Procedure-Block">
 	<p><strong>Procedure</strong><br>{{ technique['body'] }}</p>
 </div>

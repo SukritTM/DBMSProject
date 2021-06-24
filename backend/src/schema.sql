@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS technique;
 DROP TABLE IF EXISTS ingredient;
 DROP TABLE IF EXISTS recipie_ingredient;
 DROP TABLE IF EXISTS recipie_technique;
+DROP TABLE IF EXISTS ingredient_technique;
 
 CREATE TABLE recipie(
     rid INTEGER PRIMARY KEY AUTOINCREMENT,
