@@ -7,7 +7,9 @@
 </head>
 
 <body>
-
+<div class="Title">
+	<h1>{{ recipie['recipie_name'] }}</h1>
+</div>
 <div class="summary-block">
 	<p class="summary-text">{{ recipie['summary'] }}</p>
 </div>
@@ -26,7 +28,7 @@
 	<strong class="ingredients-title">Ingredients</strong>
   <ul class="ingridients-list">
     {% for ingredient in ingredients %}
-	    <li>{{ ingredient['name'] }}</li>
+	    <li>{{ ingredient['quantity'] }} {{ ingredient['name'] }}</li>
     {% endfor %}
   </ul>
 </div>
@@ -36,8 +38,9 @@
 <div class="Techniques-block">
 	<strong class="Techniques-title">Techniques used</strong>
   <ul class="ingridients-list">
-	<li>sauté</li>
-    <li>heat tablespoon</li>
+	{% for technique in techniques %}
+	    <li><a href="{{ url_for('mainpages.techniquepage', id=technique['tid']) }}">{{ technique['technique_name'] }}</li>
+    {% endfor %}
   </ul>
 </div>
 </body>
