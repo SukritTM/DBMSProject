@@ -31,23 +31,23 @@ CREATE TABLE ingredient(
 );
 
 CREATE TABLE recipie_ingredient(
-    iid INTEGER,
-    rid INTEGER,
+    iid INTEGER NOT NULL,
+    rid INTEGER NOT NULL,
     quantity TEXT,
     FOREIGN KEY (rid) REFERENCES recipie(rid),
     FOREIGN KEY (iid) REFERENCES ingredient(iid)
 );
 
 CREATE TABLE recipie_technique(
-    rid INTEGER,
-    tid INTEGER,
+    rid INTEGER NOT NULL,
+    tid INTEGER NOT NULL,
     FOREIGN KEY (rid) REFERENCES recipie(rid),
     FOREIGN KEY (tid) REFERENCES technique(tid)
 );
 
 CREATE TABLE ingredient_technique(
-    iid INTEGER,
-    tid INTEGER,
+    iid INTEGER NOT NULL,
+    tid INTEGER NOT NULL,
     quantity TEXT,
     FOREIGN KEY (iid) REFERENCES recipie(iid),
     FOREIGN KEY (tid) REFERENCES technique(tid)
