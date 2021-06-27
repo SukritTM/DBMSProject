@@ -19,12 +19,16 @@ def dbinput():
 @bp.route('/recipie', methods=('GET', 'POST'))
 def recipiepage():
     rid = request.args.get('id', type=str)
+    session['last-recipie'] = rid
+
     if request.method == 'GET':
         db = get_db()
+
         recipie = db.execute(
             'SELECT * FROM recipie WHERE rid = ?', 
             (rid)
         ).fetchone()
+
         ingredients = db.execute(
             '''SELECT name, quantity FROM 
             recipie r INNER JOIN recipie_ingredient ri ON r.rid = ri.rid
@@ -32,6 +36,7 @@ def recipiepage():
             WHERE r.rid = ?''', 
             (rid)
         ).fetchall()
+
         techniques = db.execute(
             '''SELECT technique_name, t.tid FROM 
             recipie r INNER JOIN recipie_technique rt ON r.rid = rt.rid
@@ -43,9 +48,26 @@ def recipiepage():
 
 @bp.route('/technique', methods=('GET', 'POST'))
 def techniquepage():
+    try:
+        rid = session['last-recipie']
+    except KeyError:
+        rid = -1
     tid = request.args.get('id', type=str)
+
     if request.method == 'GET':
         db = get_db()
+        
+        if rid != -1:
+            techniques = db.execute(
+                '''SELECT technique_name, t.tid FROM 
+                recipie r INNER JOIN recipie_technique rt ON r.rid = rt.rid
+                INNER JOIN technique t on rt.tid = t.tid
+                WHERE r.rid = ? AND t.tid != ?''', 
+            (rid, tid)
+            ).fetchall()
+        else:
+            techniques = None
+
         technique = db.execute(
             'SELECT technique_name, ttype, difficulty, body, theory FROM technique t WHERE t.tid = ?', (tid)
         ).fetchone()
@@ -57,7 +79,8 @@ def techniquepage():
             WHERE t.tid = ?''', 
             (tid)
         ).fetchall()
-        return render_template('techniquepage.html', technique = technique, ingredients=ingredients)
+        
+        return render_template('techniquepage.html', technique=technique, ingredients=ingredients, rid=rid, techniques=techniques)
 
 @bp.route('/recipies', methods=('GET', 'POST'))
 def recipies():
@@ -68,7 +91,12 @@ def recipies():
 
 @bp.route('/techniques', methods=('GET', 'POST'))
 def techniques():
+    try:
+        session.pop('last-recipie')
+    except KeyError:
+        pass
     if request.method == 'GET':
         db = get_db()
+
         techniques = db.execute('SELECT technique_name, tid FROM technique').fetchall()
         return render_template('techniquelist.html', techniques=techniques)

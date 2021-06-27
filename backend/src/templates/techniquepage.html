@@ -7,6 +7,9 @@
 </head>
 
 <body>
+<nav>
+	<a href="{{ url_for('mainpages.techniques') }}">All Techniques</a>
+</nav>
 <div class="Title">
   <h1>{{ technique['technique_name'] }}</h1>
 </div>
@@ -35,5 +38,22 @@
 <div class="Procedure-Block">
 	<p><strong>Procedure</strong><br>{{ technique['body'] }}</p>
 </div>
+
+{% if rid != -1 %}
+
+	<div class="Techniques-block">
+		<strong class="Techniques-title">Other techniques used in the recipe</strong>
+  	<ul class="ingridients-list">
+		{% for technique in techniques %}
+		    <li><a href="{{ url_for('mainpages.techniquepage', id=technique['tid']) }}">{{ technique['technique_name'] }}</a></li>
+    	{% endfor %}
+  	</ul>
+	</div>
+
+	<div class="Prev-Recipie">
+		<br><br>
+		Click here to go back to the <a href="{{ url_for('mainpages.recipiepage', id=rid) }}">recipie</a>
+	</div>
+{% endif %}
 </body>
 </html>

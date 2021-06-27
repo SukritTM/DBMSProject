@@ -1,5 +1,7 @@
 import os 
 from flask import Flask
+from flask.helpers import url_for
+from werkzeug.utils import redirect
 
 def create_app(test_config=None):
     # create the app
@@ -26,6 +28,7 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
     
+   
     # test page
     @app.route('/hello')
     def hello():
@@ -33,5 +36,9 @@ def create_app(test_config=None):
     
     from . import mainpages
     app.register_blueprint(mainpages.bp)
+
+    @app.route('/')
+    def redirector():
+        return redirect(url_for('mainpages.recipies'))
     
     return app
