@@ -1,3 +1,4 @@
+<!--
 <!doctype html>
 <html>
 <head>
@@ -39,7 +40,7 @@
 	<p><strong>Procedure</strong><br>{{ technique['body'] }}</p>
 </div>
 
-{% if rid != -1 %}
+{% if rid %}
 
 	<div class="Techniques-block">
 		<strong class="Techniques-title">Other techniques used in the recipe</strong>
@@ -54,6 +55,75 @@
 		<br><br>
 		Click here to go back to the <a href="{{ url_for('mainpages.recipiepage', id=rid) }}">recipie</a>
 	</div>
+
 {% endif %}
 </body>
 </html>
+-->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+<link href="{{ url_for('static', filename='recipie.css') }}" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div class="full_wrapper">
+  <div class="Container">
+    <div class="Title">
+      <h1>{{ technique['technique_name'] }}</h1>
+      
+      </div>
+    <div class="summary-block">
+      <p class="summary-text">{{ technique['theory'] }}</p>
+      </div>
+    <div class="properties_wrapper">
+		<div class="Column1">
+      <div class="Recipe-info">  
+        <ul class="R-Info-List" >
+          <dt><h3>Techniques Details</h3></dt>
+          <li  class="difficulty">Difficulty Rating: {{ technique['difficulty'] }}</li>
+          <li  class="ttype">Technique Type: {{ technique['ttype'] }}</li>
+          </ul>
+        </div>	
+	<div class="Procedure-Block">
+	  <p><h3>Procedure</h3></p>
+
+	  <p class="procedure_writeout">
+		{{ technique['body'] }}
+	</p>
+
+	  </div>
+		</div>
+      <div class="Column2">
+		{% if ingredients %}
+		  <div class="Ingrdients-block">
+			<h3 class="ingredients-title">Ingredients</h3>
+			<ul class="ingridients-list" >
+				{% for ingredient in ingredients %}
+				<li>{{ ingredient['quantity'] }} {{ ingredient['name'] }}</li>
+				{% endfor %}
+			</ul>
+			</div>
+		{% endif %}
+		{% if rid %}
+		<div class="Techniques-block">
+			<h3 class="Techniques-title">Used in Recipes</h3>
+		{% for technique in techniques %}
+		    <li><a href="{{ url_for('mainpages.recipiepage', id=rid) }}">{{ technique['technique_name'] }}</a></li>
+    	{% endfor %}
+			</div>
+		{% endif %}
+	 	</div>
+  </div>
+</div>
+	<div class="Navbar_Wrap">
+		<a href="{{ url_for('mainpages.recipies') }}">Recipes</a><&nbsp>
+		<a href="{{ url_for('mainpages.techniques') }}">Techniques</a>
+		{% if rid %}
+		<a href="{{ url_for('mainpages.recipiepage', id=rid) }}">Previous Recipe</a></li>
+		{% endif %}
+	</div>
+</div>
+</body>

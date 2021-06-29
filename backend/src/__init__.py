@@ -41,4 +41,10 @@ def create_app(test_config=None):
     def redirector():
         return redirect(url_for('mainpages.recipies'))
     
+    from . import dbin
+    app.register_blueprint(dbin.bp)
+
+    from . import auth
+    app.register_blueprint(auth.bp)
+    
     return app

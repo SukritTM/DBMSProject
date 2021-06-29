@@ -49,15 +49,15 @@ def recipiepage():
 @bp.route('/technique', methods=('GET', 'POST'))
 def techniquepage():
     try:
-        rid = session['last-recipie']
+        rid = session.get('last-recipie')
     except KeyError:
-        rid = -1
+        rid = None
     tid = request.args.get('id', type=str)
 
     if request.method == 'GET':
         db = get_db()
-        
-        if rid != -1:
+
+        if rid:
             techniques = db.execute(
                 '''SELECT technique_name, t.tid FROM 
                 recipie r INNER JOIN recipie_technique rt ON r.rid = rt.rid
@@ -92,7 +92,7 @@ def recipies():
 @bp.route('/techniques', methods=('GET', 'POST'))
 def techniques():
     try:
-        session.pop('last-recipie')
+        session['last-recipie'] = None
     except KeyError:
         pass
     if request.method == 'GET':
@@ -100,3 +100,19 @@ def techniques():
 
         techniques = db.execute('SELECT technique_name, tid FROM technique').fetchall()
         return render_template('techniquelist.html', techniques=techniques)
+
+@bp.route('/favsave', methods=('GET',))
+def fav_recipie():
+    db = get_db()
+    rid = session.get('last-recipie')
+    try:
+        uid = session.get('user-id')
+    except KeyError:
+        uid = None
+    if request.method == 'GET' and uid:
+        db.execute(
+            'INSERT INTO fav_recipies (uid, iid) VALUES (?, ?)',
+            (uid, rid)
+        )
+    flash('Your recipie has been saved')
+    return redirect(url_for('mainpages.recipiepage', id=rid))

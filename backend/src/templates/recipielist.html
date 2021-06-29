@@ -1,3 +1,4 @@
+<!--
 <!doctype html>
 <html>
 <head>
@@ -25,5 +26,37 @@
         {% endfor %}
     </dl>
 </div>	
+</body>
+</html>
+-->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Recipe-lis</title>
+<link href="{{ url_for('static', filename='recipie.css') }}" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div class="Container">
+  <div class="Navbar_Wrap">
+      <a href="{{ url_for('mainpages.techniques') }}">Techniques</a>
+    </div>
+  <div class="Title">
+    <h1>Recipes</h1>
+  </div>
+  <div class="prty-text-block">
+    <p class="prty-text">Explore the beautiful recipes on our site</p>
+  </div>
+  
+  <div class="Recipe-list-class">  
+    <dl class="R-list">
+      <dt><h3>Recipes</h3></dt>
+      {% for recipie in recipies %}
+		    <dd  class="Recipe-link"><a href="{{ url_for('mainpages.recipiepage', id=recipie['rid']) }}">{{ recipie['recipie_name'] }}</a></dd>
+        {% endfor %}
+      </dl>
+  </div>	
+</div>
 </body>
 </html>

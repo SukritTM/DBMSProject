@@ -1,0 +1,33 @@
+@charset "utf-8";
+
+
+input[type=text], input[type=password] {
+    width: 500px;
+    padding: 11px;
+    display: inline-block;
+    color: #141A1B;
+    background-color: #f5effd;
+}
+
+button {
+  background-color:#F5EFFD;
+  color: #141A1B;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 525px;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+.Container {
+  padding: 30px;
+}
+.body{
+    background-color: #141A1B;
+}
+.b{
+    color: #141A1B;
+}
