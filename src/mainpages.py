@@ -1,6 +1,7 @@
 from flask import Blueprint, flash, g, redirect, render_template, request, session, url_for, current_app
 from src.db import get_db
 
+from src.auth import login_required
 
 bp = Blueprint('mainpages', __name__, url_prefix='/page')
 
@@ -87,7 +88,26 @@ def recipies():
     if request.method == 'GET':
         db = get_db()
         recipies = db.execute('SELECT recipie_name, rid FROM recipie').fetchall()
+
         return render_template('recipielist.html', recipies=recipies)
+
+@bp.route('/saved', methods=('GET', 'POST'))
+@login_required
+def savedrecipies():
+    if request.method == "GET":
+        user = g.user
+        print(user[0])
+        db = get_db()
+        recipies = db.execute(
+            '''SELECT r.recipie_name, r.rid FROM
+            recipie r INNER JOIN fav_recipies f ON r.rid = f.rid
+            INNER JOIN user u on f.uid = u.uid
+            where u.uid = ?''', 
+            (str(user[0]),)
+        ).fetchall()
+        print(recipies[0][0])
+
+        return render_template('savedrecipies.html', recipies=recipies)
 
 @bp.route('/techniques', methods=('GET', 'POST'))
 def techniques():
@@ -102,17 +122,24 @@ def techniques():
         return render_template('techniquelist.html', techniques=techniques)
 
 @bp.route('/favsave', methods=('GET',))
+@login_required
 def fav_recipie():
     db = get_db()
     rid = session.get('last-recipie')
     try:
         uid = session.get('user-id')
+        # print(uid, rid)
     except KeyError:
         uid = None
     if request.method == 'GET' and uid:
         db.execute(
-            'INSERT INTO fav_recipies (uid, iid) VALUES (?, ?)',
+            'INSERT INTO fav_recipies (uid, rid) VALUES (?, ?)',
             (uid, rid)
         )
-    flash('Your recipie has been saved')
+        db.commit()
+        # debug = db.execute(
+        #     'SELECT * FROM fav_recipies'
+        # ).fetchall()
+        # print([(i[0], i[1]) for i in debug])
+        flash('Your recipie has been saved')
     return redirect(url_for('mainpages.recipiepage', id=rid))

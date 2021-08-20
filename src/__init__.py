@@ -18,6 +18,7 @@ def create_app(test_config=None):
     else:
         # load from test config when testing
         app.config.from_mapping(test_config)
+        app.config["TEMPLATES_AUTO_RELOAD"] = True
 
     # ensure instance directory exists
     try:

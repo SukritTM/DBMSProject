@@ -9,22 +9,22 @@
 
 <body>
 <nav>
-	<a href="{{ url_for('mainpages.recipies') }}">All Recipes</a>
+	<a href="{{ url_for('mainpages.recipes') }}">All Recipes</a>
 </nav>
 <div class="Title">
-	<h1>{{ recipie['recipie_name'] }}</h1>
+	<h1>{{ recipe['recipe_name'] }}</h1>
 </div>
 <div class="summary-block">
-	<p class="summary-text">{{ recipie['summary'] }}</p>
+	<p class="summary-text">{{ recipe['summary'] }}</p>
 </div>
 
 <div class="Recipe-info">  
 	<dl class="R-Info-List">
 		<dt><h3>Recipe Details</h3></dt>
-		<dd  class="difficulty">Difficulty Rating: {{ recipie['difficulty'] }}</dd>
-		<dd  class="cooktime">Cook time: {{ recipie['cooktime'] }} hours</dd>
-		<dd  class="serves-count">Serves: {{ recipie['serves']  }} people</dd>
-		<dd  class="veg/nonveg">{{ recipie['veg'] }}</dd>
+		<dd  class="difficulty">Difficulty Rating: {{ recipe['difficulty'] }}</dd>
+		<dd  class="cooktime">Cook time: {{ recipe['cooktime'] }} hours</dd>
+		<dd  class="serves-count">Serves: {{ recipe['serves']  }} people</dd>
+		<dd  class="veg/nonveg">{{ recipe['veg'] }}</dd>
 	</dl>
 </div>	
 
@@ -37,7 +37,7 @@
   </ul>
 </div>
 <div class="Procedure-Block">
-	<p><strong>Procedure</strong><br>{{ recipie['body'] }}</p>
+	<p><strong>Procedure</strong><br>{{ recipe['body'] }}</p>
 </div>
 <div class="Techniques-block">
 	<strong class="Techniques-title">Techniques used</strong>
@@ -56,7 +56,7 @@
 <head>
 <meta charset="utf-8">
 <title>Untitled Document</title>
-<link href="{{ url_for('static', filename='recipie.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ url_for('static', filename='recipe.css') }}" rel="stylesheet" type="text/css">
 </head>
 
 <body bgcolor="#141A1B">
@@ -67,24 +67,24 @@
       
       </div>
     <div class="summary-block">
-      <p class="summary-text">{{ recipie['summary'] }}</p>
+      <p class="summary-text">Greek-inspired chicken skewers with lots of flavor! Marinade is also wonderful on grilled vegetables.</p>
       </div>
     <div class="properties_wrapper">
 		<div class="Column1">
       <div class="Recipe-info">  
         <ul class="R-Info-List" >
           <dt><h3>Recipe Details</h3></dt>
-          <li  class="difficulty">Difficulty Rating: {{ recipie['difficulty'] }}</li>
-          <li  class="cooktime">Cook time: {{ recipie['cooktime'] }} hours</li>
-          <li  class="serves-count">Serves: {{ recipie['serves']  }} people</li>
-          <li  class="veg/nonveg">{{ recipie['veg'] }}</li>
+          <li  class="difficulty">Difficulty Rating: {{ recipe['difficulty'] }}</li>
+          <li  class="cooktime">Cook time: {{ recipe['cooktime'] }} hours</li>
+          <li  class="serves-count">Serves: {{ recipe['serves']  }} people</li>
+          <li  class="veg/nonveg">{{ recipe['veg'] }}</li>
           </ul>
         </div>	
 	<div class="Procedure-Block">
 	  <p><h3>Procedure</h3></p>
 
 	  <p class="procedure_writeout">
-		{{ recipie['body'] }}</p>
+		{{ recipe['body'] }}</p>
 
 	  </div>
 		</div>
@@ -105,25 +105,16 @@
 				{% endfor %}
 
 			</div>
-		
-		<br><br><br>
-		<div class="favorite_button">
-			  	<a href="{{ url_for('mainpages.fav_recipie') }}">Add to Favorites</a>
-				{% with messages = get_flashed_messages() %}
-  					{% if messages %}
-    					<ul class=flashes>
-    						{% for message in messages %}
-      							<li>{{ message }}</li>
-    						{% endfor %}
-					{% endif %}
-				{% endwith %}
+		<!--
+		  <div class="favorite_button">
+			  <a href=""><h3>Add to Favorites</h3></a>
 		</div>
-		
+		-->
 	 	</div>
   </div>
 </div>
 	<div class="Navbar_Wrap">
-			<a href="{{ url_for('mainpages.recipies') }}">Recipes</a><&nbsp>
+			<a href="{{ url_for('mainpages.recipes') }}">Recipes</a><&nbsp>
 			<a href="{{ url_for('mainpages.techniques') }}">Techniques</a>
 			<!--
 			<li><a>User</a></li>
