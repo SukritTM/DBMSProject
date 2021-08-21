@@ -1,1 +1,1 @@
-web: flask run -h 0.0.0.0 -p 5000
+web: gunicorn -w 4 -b 0.0.0.0:5000 src:create_app
